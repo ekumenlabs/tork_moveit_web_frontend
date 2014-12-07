@@ -19,3 +19,7 @@ div#urdf {
     margin-left: 0;
     margin-right: 0;
 }
+
+.nav-pills > li > a  {
+    margin-top: 5px;
+}

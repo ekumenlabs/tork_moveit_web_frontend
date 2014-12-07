@@ -1,14 +1,17 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">Web Robot Controller</span>
+    </div>
 
-    <p class="navbar-text navbar-right">
+    <ul class="nav nav-pills pull-right">
       <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+        <li><span class="navbar-text">Logged in as <strong><%= current_user.email %></strong></span></li>
+        <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
       <% else %>
-        <%= link_to 'Sign in', new_user_session_path %>
+        <li><%= link_to "Sign in", new_user_session_path %></li>
       <% end %>
-    </p>
+    </ul>
 
   </div>
 </nav>

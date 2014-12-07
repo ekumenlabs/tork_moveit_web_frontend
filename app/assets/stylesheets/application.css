@@ -11,6 +11,6 @@
  * file per style scope.
  *
  *= require bootstrap-slider.min
-  *= require_tree .
+ *= require_tree .
  *= require_self
  */

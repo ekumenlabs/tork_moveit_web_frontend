@@ -37,4 +37,7 @@ Rails.application.configure do
 
   # Devise mailer configuration
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # HOST + PORT where rwt_moveit is running
+  config.rwt_moveit = {host: '192.168.1.103', port: '9090'}
 end

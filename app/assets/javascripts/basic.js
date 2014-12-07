@@ -111,18 +111,18 @@ function init() {
 
 
   // Create the main viewer.
-  var width = parseInt($("#main-content").css("width"));
+  var width = parseInt($("#urdf").css("width"));
   var height = Math.max(
       $(document).height(),
       $(window).height(),
-      /* For opera: */
+      // For opera:
       document.documentElement.clientHeight
   );
 
   var viewer = new ROS3D.Viewer({
     divID : 'urdf',
-    width : width * 0.8,
-    height : height * 0.8,
+    width : width,
+    height : height,
     antialias : true
   });
 
@@ -578,7 +578,7 @@ function create_joint_position_msg(type, plan_only) {
   goal_positions = new Array();
   dims = new Array();
 
-  $("#" + current_group).children("label").each(function() {
+  $("#" + current_group).find("label").each(function() {
     var dim = new ROSLIB.Message({
       label: ($(this).attr("id").split("-")[0]),
       size: ($(this).attr("id").split("-")[0]).length,
@@ -632,7 +632,7 @@ function create_joint_position_msg(type, plan_only) {
   return msg;
 }
 
-function callback() {
+function updateJoint() {
   var msg = create_joint_position_msg(1, true);
   if($('input[name="manip"]:checked').val() == 0) {
     start_pub.publish(msg);
@@ -665,19 +665,63 @@ function createSliderView() {
     }
   }
   joint_names.get(function(value) {
+
     names = value.names;
     for (group_name in link_group) {
       for (var i = 0;i < names.length;i++) {
         if (link_group[group_name].indexOf(names[i]) != -1) {
-          child = $('<label>', {for: names[i], text: names[i]});
-          child2 = $('<input>', {type: "range", name: names[i], id: names[i], value: 0, max: eval("value." + names[i] + ".max"), min: eval("value." + names[i] + ".min"), step: 0.000001, "data-highlight": "true", "data-mini": "true",
-            onchange: "callback()"});
-          $("#" + group_name).append(child);
-          $("#" + group_name).append(child2);
+
+          var sliderContainer = $('<div>', {
+            class: "form-group"
+          });
+
+          var sliderLabel = $('<label>', {
+            for: names[i],
+            text: names[i],
+            class: "col-md-2"
+          });
+
+          var slider = $('<span>', {
+            "class": "col-md-7"
+          });
+          slider.append($('<input>', {
+            type: "text",
+            name: group_name + "-" + names[i],
+            id: group_name + "-" + names[i],
+            "data-slider-value": 0,
+            "data-slider-max": eval("value." + names[i] + ".max"),
+            "data-slider-min": eval("value." + names[i] + ".min"),
+            "data-slider-step": 0.01,
+            "data-slider-tooltip": "hide"
+          }));
+
+          var sliderValue = $('<span>', {
+            "class": "col-md-3"
+          });
+          sliderValue.append($('<input>', {
+            type: "text",
+            id: group_name + "-" + names[i] + "CurrentSliderValue",
+            value: "0",
+            "class": "form-control slider-value",
+            readonly: "readonly"
+          }));
+
+          $("#" + group_name).append(sliderContainer);
+          sliderContainer
+              .append(sliderLabel)
+              .append(slider)
+              .append(sliderValue);
+
+          $("#" + group_name + "-" + names[i])
+              .slider()
+              .on("slide", function(slideEvt) {updateJoint()})
+              .on("slide", function(slideEvent) {
+                $("#" + slideEvent.target.id + "CurrentSliderValue").val(slideEvent.value);
+              });
         }
       }
     }
-    $.getScript("http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js");
+
     var msg = new ROSLIB.Message({
       data: current_group
     });

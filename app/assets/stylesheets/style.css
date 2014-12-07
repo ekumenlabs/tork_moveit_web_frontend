@@ -1,3 +1,4 @@
+/*
 #main-content {
     width: 100%;
     height: 100%;
@@ -19,7 +20,37 @@ div.jquery-ui-slider {
     margin-bottom: 10px;
 }
 
+*/
 div#urdf {
-    float: left;
-    width: 80%;
+    width: 100%;
+    height: 100%;
 }
+
+.controller-pane {
+    padding: 20px;
+}
+
+.controller-pane .btn {
+    width: 100%;
+}
+
+.row-centered {
+    text-align:center;
+}
+
+.controller-pane-form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+/*
+.form-group .slider-horizontal {
+    margin-left: 15px;
+    margin-right: 15px;
+    width: 100%;
+}
+
+.form-group .slider-value {
+    width: 100%;
+    display: inline;
+}
+*/

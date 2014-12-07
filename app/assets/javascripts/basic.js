@@ -580,9 +580,10 @@ function create_joint_position_msg(type, plan_only) {
 
   $("#" + current_group).find("label").each(function() {
     var dim = new ROSLIB.Message({
-      label: ($(this).attr("id").split("-")[0]),
-      size: ($(this).attr("id").split("-")[0]).length,
-      stride: ($(this).attr("id").split("-")[0]).length
+      label: ($(this).attr("id").split("-")[1]),
+      // TODO: Still trying to make sense of these two
+      size: ($(this).attr("id").split("-")[1]).length,
+      stride: ($(this).attr("id").split("-")[1]).length
     });
     dims.push(dim);
     if (type == 0) {
@@ -595,7 +596,7 @@ function create_joint_position_msg(type, plan_only) {
       }
     }
     else {
-      positions.push(parseFloat($(this).next().children("input").next().children("a").attr("aria-valuenow")));
+      positions.push(parseFloat($(this).next().next().children('input').val()));
     }
   });
 
@@ -632,7 +633,7 @@ function create_joint_position_msg(type, plan_only) {
   return msg;
 }
 
-function updateJoint() {
+function updateJoints() {
   var msg = create_joint_position_msg(1, true);
   if($('input[name="manip"]:checked').val() == 0) {
     start_pub.publish(msg);
@@ -665,7 +666,6 @@ function createSliderView() {
     }
   }
   joint_names.get(function(value) {
-
     names = value.names;
     for (group_name in link_group) {
       for (var i = 0;i < names.length;i++) {
@@ -676,7 +676,8 @@ function createSliderView() {
           });
 
           var sliderLabel = $('<label>', {
-            for: names[i],
+            for: group_name + "-" + names[i],
+            id: group_name + "-" + names[i]  + "-label",
             text: names[i],
             class: "col-md-2"
           });
@@ -700,7 +701,7 @@ function createSliderView() {
           });
           sliderValue.append($('<input>', {
             type: "text",
-            id: group_name + "-" + names[i] + "CurrentSliderValue",
+            id: group_name + "-" + names[i] + "current-slider-value",
             value: "0",
             "class": "form-control slider-value",
             readonly: "readonly"
@@ -714,9 +715,9 @@ function createSliderView() {
 
           $("#" + group_name + "-" + names[i])
               .slider()
-              .on("slide", function(slideEvt) {updateJoint()})
-              .on("slide", function(slideEvent) {
-                $("#" + slideEvent.target.id + "CurrentSliderValue").val(slideEvent.value);
+              .on("change", function(changeEvent) {
+                $("#" + changeEvent.target.id + "current-slider-value").val(changeEvent.value.newValue);
+                updateJoints();
               });
         }
       }

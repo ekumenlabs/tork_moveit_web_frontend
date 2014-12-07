@@ -1,26 +1,3 @@
-/*
-#main-content {
-    width: 100%;
-    height: 100%;
-    background-color: yellow;
-}
-#control-content {
-    float: left;
-    margin-left: 15px;
-    width: 15%;
-    height: 200px;
-}
-
-.slider-view {
-    float: right;
-}
-
-div.jquery-ui-slider {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-*/
 div#urdf {
     width: 100%;
     height: 100%;
@@ -42,15 +19,3 @@ div#urdf {
     margin-left: 0;
     margin-right: 0;
 }
-/*
-.form-group .slider-horizontal {
-    margin-left: 15px;
-    margin-right: 15px;
-    width: 100%;
-}
-
-.form-group .slider-value {
-    width: 100%;
-    display: inline;
-}
-*/

@@ -3,8 +3,7 @@ end
 
 class SimulationNodeScheduler
 
-  # Answer true if there are less active simulation nodes
-  # than what er are allowed to have
+  # Answer true if we can spawn a new EC2 node for this user
   def can_schedule_new_node_for(user)
     SimulationNode.count < max_simulation_nodes
   end
@@ -14,8 +13,7 @@ class SimulationNodeScheduler
   def schedule_new_node_for!(user)
     raise NoSimulationNodesLeft unless can_schedule_new_node_for(user)
     node_address = launch_ec2_node()
-    # Make sure next time user.simulation_node is called it has the
-    # right node
+    # Make sure next time user.simulation_node is called it has the new node associated
     user.clear_association_cache
     SimulationNode.create!({address: node_address, user: user})
   end
@@ -57,7 +55,6 @@ class SimulationNodeScheduler
   # Do nothing right now. In the future we would trigger a
   # node shutdown
   def shut_down_ec2_node(address)
-
   end
 
   def rwt_moveit_config

@@ -103,7 +103,7 @@ Devise.setup do |config|
   # The period the generated invitation token is valid, after
   # this period, the invited resource won't be able to accept the invitation.
   # When invite_for is 0 (the default), the invitation won't expire.
-  # config.invite_for = 2.weeks
+  config.invite_for = 2.weeks
 
   # Number of invitations users can send.
   # - If invitation_limit is nil, there is no limit for invitations, users can
@@ -131,7 +131,7 @@ Devise.setup do |config|
   # The class name of the inviting model. If this is nil,
   # the #invited_by association is declared to be polymorphic.
   # Default: nil
-  # config.invited_by_class_name = 'User'
+  config.invited_by_class_name = 'User'
 
   # The column name used for counter_cache column. If this is nil,
   # the #invited_by association is declared without counter_cache.
@@ -299,5 +299,6 @@ end
 
 # Hook to the user log-out action so we release the associated simulation node
 Warden::Manager.before_logout do |user, auth, opts|
-  user.release_simulation_node
+  # Since we are using Devise for Admin UI also we may not get a User instance here
+  user.try :release_simulation_node
 end

@@ -8,3 +8,6 @@ gem 'rufus-scheduler',        '~> 3.0.9'
 
 gem 'jquery-rails',           '~> 3.1.2'
 gem 'devise-bootstrap-views', '~> 0.0.3'
+
+# Stable does not support Rails 4
+gem 'activeadmin',            github: 'activeadmin'

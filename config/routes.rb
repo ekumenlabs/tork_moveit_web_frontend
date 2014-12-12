@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  # Devise for admin users
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  # Active Admin
+  ActiveAdmin.routes(self)
+
+  # Devise for non-admin users
   devise_for :users
 
   root to: 'simulation#index'

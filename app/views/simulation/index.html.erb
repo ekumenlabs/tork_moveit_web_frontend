@@ -5,11 +5,13 @@
   <script src="http://cdn.robotwebtools.org/roslibjs/current/roslib.js"></script>
   <script src="http://cdn.robotwebtools.org/ros3djs/current/ros3d.js"></script>
   <script src="http://cdn.robotwebtools.org/ColladaAnimationCompress/current/ColladaLoader2.js"></script>
+  <%= javascript_tag "var node_address = #{@node.address.to_json};" %>
   <%= javascript_include_tag 'basic' %>
 
   <script>
     $(document).ready(function() {
       init();
+      spawnServerPing();
     });
   </script>
 <% end %>

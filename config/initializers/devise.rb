@@ -189,10 +189,10 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  # config.timeout_in = 30.minutes
+  config.timeout_in = 3.hours
 
   # If true, expires auth token on session timeout.
-  # config.expire_auth_token_on_timeout = false
+  config.expire_auth_token_on_timeout = true
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
@@ -295,4 +295,9 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+end
+
+# Hook to the user log-out action so we release the associated simulation node
+Warden::Manager.before_logout do |user, auth, opts|
+  user.release_simulation_node
 end

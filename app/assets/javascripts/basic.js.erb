@@ -18,7 +18,8 @@ var tfClient;
 
 function init() {
   // Connect to ROS.
-  var url = "ws://<%= MoveitWebFrontend::Application.config.rwt_moveit[:host] %>:<%= MoveitWebFrontend::Application.config.rwt_moveit[:port] %>";
+  // `node_address` is set by the calling view.
+  var url = "ws://" + node_address;
 
   var real_ros = new ROSLIB.Ros({
     url : url

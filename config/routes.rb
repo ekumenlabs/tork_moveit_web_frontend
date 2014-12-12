@@ -2,10 +2,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  root to: 'home#index'
+  root to: 'simulation#index'
 
-  scope '/home' do
-    get 'index', to: 'home#index', as: 'home_index'
-  end
+  get '/simulation',              to: 'simulation#index', as: 'simulation_index'
+  get '/simulation/ping.:format', to: 'simulation#ping',  format: 'json'
 
 end

@@ -13,3 +13,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-slider.min
+//= require session_ping

@@ -38,6 +38,21 @@ Rails.application.configure do
   # Devise mailer configuration
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  # HOST + PORT where rwt_moveit is running
-  config.rwt_moveit = {host: '192.168.1.103', port: '9090'}
+  config.rwt_moveit = {
+    # HOST + PORT where rwt_moveit is running. This will be removed when we have
+    # dynamic EC2 node allocation
+    host: '192.168.1.103',
+    port: '9090',
+    # The max number of simulation nodes that we can spawn
+    max_simulation_nodes: 1,
+    # Interval at which a client in a simulation page will send a ping to the server
+    ping_interval: 15.seconds,
+    # Interval at which a client in a simulation page will send a ping to the server
+    # if the previous ping failed
+    retry_ping_interval: 5.seconds,
+    # Interval at which we ask the scheduler to garbage collect idle nodes
+    node_garbage_collection_interval: 45.seconds,
+    # The time that has to elapse to consider a node idle
+    node_max_idle_time: 30.seconds
+  }
 end

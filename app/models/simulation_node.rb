@@ -1,7 +1,7 @@
 class SimulationNode < ActiveRecord::Base
   belongs_to :user
 
-  validates :user,   presence: true
+  validates :user,    presence: true
   validates :address, presence: true, uniqueness: true
 
   def self.idle
